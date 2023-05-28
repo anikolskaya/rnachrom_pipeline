@@ -1,3 +1,7 @@
+import pyranges as pr
+import pandas as pd
+pd.options.mode.chained_assignment = None
+
 def run_annotation_and_voting(gene_annot_path: str, 
                               contacts_path: str,
                               keep_strand = True,
