@@ -3,7 +3,7 @@ import pandas as pd
 
 from .schemas import rdc_pyranges_BED, rdc_dtypes, voted_BED
 
-def load_gtf_restricted(path: str) -> pr.PyRanges:
+def load_gtf_restricted(path):
     """
     Read intervals and metadata from a gtf file.
 
@@ -29,7 +29,7 @@ def load_gtf_restricted(path: str) -> pr.PyRanges:
     
     
 
-def load_rdc(path: str, sort = True, ncpus = 1) -> pr.PyRanges:
+def load_rdc(path, sort = True, ncpus = 1):
     """
     Read intervals and metadata from a RNA-DNA contacts file.
 
