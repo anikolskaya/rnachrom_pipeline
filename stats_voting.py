@@ -8,8 +8,8 @@ import pathlib
 import os
 from natsort import natsort_keygen
 
-def calculate_stats(frames_d: dict,
-                    outdir_path = './stats_2'):
+def calculate_stats(frames_d,
+                    outdir_path = './stats'):
     """
     Calculate statistics for annotation and voting processes.
     
@@ -48,7 +48,7 @@ def calculate_stats(frames_d: dict,
 
 
 
-def stats_by_gene_type(vote_sorted: pd.DataFrame):
+def stats_by_gene_type(vote_sorted):
     
     return vote_sorted.groupby(['gene_type']).agg(n_counts=('gene_name', 'count'), 
                                            n_genes=('gene_name', 'nunique'))
@@ -56,18 +56,18 @@ def stats_by_gene_type(vote_sorted: pd.DataFrame):
     
 
 
-def density_by_gene(vote_sorted: pd.DataFrame):
+def density_by_gene(vote_sorted):
     
     return vote_sorted[['Chromosome', 'gene_name', 'gene_type', 'density']].drop_duplicates('gene_name')   
     
 
 
-def counts_by_gene(vote_sorted: pd.DataFrame, filename = 'counts_by_genes.tab'):
+def counts_by_gene(vote_sorted, filename = 'counts_by_genes.tab'):
     
     return vote_sorted.groupby('gene_name').agg(count=('gene_name', 'count'))     
 
 
-def counts_by_chr(d: dict):
+def counts_by_chr(d):
     d.pop('voted_annot', None)
     all_frames_stat = dict(map(lambda item: (item[0], item[1].groupby('Chromosome')['id'].nunique()), d.items()))
     
