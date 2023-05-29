@@ -16,8 +16,8 @@ args = parser.parse_args()
 
 
 def run_annotation_and_voting(
-                              gene_annot_path: str, 
-                              contacts_path: str,
+                              gene_annot_path, 
+                              contacts_path,
                               keep_strand = True,
                               ncpus = 1):
     """
@@ -74,7 +74,7 @@ def run_annotation_and_voting(
     
 
     
-def annotate_rdc(contacts: pr.PyRanges, annot: pr.PyRanges, cpus = 1) -> pr.PyRanges:
+def annotate_rdc(contacts, annot, cpus = 1):
     """
     Create annotated genomic intervals from a RNA-DNA contacts file.
 
@@ -108,7 +108,7 @@ def annotate_rdc(contacts: pr.PyRanges, annot: pr.PyRanges, cpus = 1) -> pr.PyRa
 
 
 
-def vote(an_contacts: pd.DataFrame) -> pd.DataFrame:
+def vote(an_contacts):
     """
     Perform so-called voting procedure: in the case of unambiguous annotation 
     the preference is given to the gene with more dense coverage of RNA-parts
@@ -133,8 +133,8 @@ def vote(an_contacts: pd.DataFrame) -> pd.DataFrame:
 
 
 
-def remove_ribo(contacts: pd.DataFrame,
-                ribo_list = ['rRNA', 'rRNA_pseudogene', 'rRNA_RepM']) -> pd.DataFrame:
+def remove_ribo(contacts,
+                ribo_list = ['rRNA', 'rRNA_pseudogene', 'rRNA_RepM']):
     """
     Remove contacts belonging to ribosomal gene types
     
