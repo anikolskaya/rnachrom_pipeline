@@ -75,4 +75,3 @@ def counts_by_chr(d):
                                                                    'selected_annot': 'Nannot_correct_strand',
                                                                    'no_annot': 'Nnoannot',
                                                                    'voted_noribo': 'NnoRibo'}).sort_values(by="Chromosome", key=natsort_keygen())
-    
