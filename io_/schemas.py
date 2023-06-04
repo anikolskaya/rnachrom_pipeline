@@ -22,7 +22,7 @@ rdc_dtypes = {
     'rna_chr': 'category',
     'rna_bgn': 'int',
     'rna_end': 'int',
-    'id': 'int',
+    'id': 'str',
     'rna_strand': 'category',
     'rna_cigar': 'category',
     'dna_chr': 'category',
@@ -44,6 +44,17 @@ rdc_pyranges_BED = [
     'dna_end',
     'dna_strand',
     'dna_cigar']
+
+
+annot_pyranges_BED = [
+    'Chromosome',
+    'Start',
+    'End',
+    'Strand',
+    'gene_name',
+    'gene_type',
+    'source',
+]
 
 
 voted_BED = [
@@ -68,4 +79,4 @@ BED6 = [
     "end",
     "name",
     "score",
-    "strand",]
+    "strand"]
