@@ -26,7 +26,7 @@ def run_cigar_processing(rdc_path, outdir = './results'):
 
     Returns
     -------
-    pd.DataFrame 
+    pd.DataFrame (with matches and corrected splicing)
     
     """
     rdc = load_rdc(rdc_path, header = 0)
@@ -39,24 +39,84 @@ def run_cigar_processing(rdc_path, outdir = './results'):
     rdc.drop(['N_cnt', 'ID_cnt'], axis=1).to_csv(os.path.join(outdir, Path(sys.argv[1]).stem + '_CIGAR_processed.tsv'), sep = '\t',
                                                                                                   header=False, 
                                                                                                   index=False)
+    calculate_stats(rdc, outdir)
+    
     return
 
 
 def splicing_cases(df):
+    """
+    Count N, I, D occurences in the CIGAR field
+    
+
+    Parameters
+    ----------
+    df: pd.DataFrame
+        RDC-like file with RNA-DNA contacts
+
+    Returns
+    -------
+    pd.DataFrame
+
+    """
     df['N_cnt'] = df.rna_cigar.str.count('N')
     df['ID_cnt'] = df.rna_cigar.str.count(r'[ID]')
     return df
 
 
 def process_simple_splicing(df):
+
+    """
+    Keeps longer part of spliced contacts and re-calculate bgn/end coordinates
+    
+
+    Parameters
+    ----------
+    df: pd.DataFrame
+        RDC-like file with RNA-DNA contacts
+
+    Returns
+    -------
+    pd.DataFrame
+
+    """
+
     df_ss = df[(df.N_cnt == 1) & (df.ID_cnt == 0)]
+
     df_ss[['N1','N2']] = df_ss['rna_cigar'].str.split(r'[NM]', expand=True).iloc[:,[0,2]]
     df_ss = df_ss.astype({'N1':'int','N2':'int'})
     
     df_ss['rna_end'] = np.select([df_ss.N1 >= df_ss.N2], [df_ss.rna_bgn + df_ss.N1], default = df_ss.rna_end)
     df_ss['rna_bgn'] = np.select([df_ss.N1 < df_ss.N2], [df_ss.rna_end - df_ss.N2], default = df_ss.rna_bgn)
     df_ss.drop(['N1', 'N2'], axis = 1, inplace = True)
+
+    stats['raw'] = df.shape[0]
+    stats['match'] = df[(df.N_cnt == 0) & (df.ID_cnt == 0)].shape[0]
+    stats['splice_correct'] = df_ss.shape[0]
+    stats['removed'] = stats['raw'] - stats['match'] - stats['splice_correct']
     
     return pd.concat([df[(df.N_cnt == 0) & (df.ID_cnt == 0)], df_ss])
+
+def calculate_stats(df, outdir): 
+
+    """
+    Save a file with splicing statististics
+    
+
+    Parameters
+    ----------
+    df: pd.DataFrame
+        RDC-like file with RNA-DNA contacts
+
+    
+    """
+    stats = {}
+    stats['raw'] = df.shape[0]
+    stats['match'] = df[(df.N_cnt == 0) & (df.ID_cnt == 0)].shape[0]
+    stats['splice_correct'] = df[(df.N_cnt == 1) & (df.ID_cnt == 0)].shape[0]
+    stats['removed'] = stats['raw'] - stats['match'] - stats['splice_correct']
+    pd.DataFrame([stats]).to_csv(os.path.join(outdir, Path(sys.argv[1]).stem + '.splicing.stat.tsv'), sep = '\t', 
+                                                                                                  index=False)
+    return 
 
 run_cigar_processing(args.path_rdc_primary, args.outdir)
