@@ -71,12 +71,10 @@ voted_BED = [
     'gene_type' 
 ]
 
-# UCSC File Format
-# https://genome.ucsc.edu/FAQ/FAQformat.html
-BED6 = [
-    "chrom",
-    "start",
-    "end",
-    "name",
-    "score",
-    "strand"]
+
+BED3 = [
+   'Chromosome',
+    'Start',
+    'End',
+]
+
