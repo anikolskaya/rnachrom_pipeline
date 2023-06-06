@@ -1,7 +1,8 @@
 import pyranges as pr
 import pandas as pd
+import ssl
 
-from .schemas import rdc_pyranges_BED, rdc_dtypes, voted_BED, annot_pyranges_BED
+from .schemas import rdc_pyranges_BED, rdc_dtypes, voted_BED, annot_pyranges_BED, BED3
 
 def load_gtf_restricted(path):
     """
@@ -86,3 +87,16 @@ def load_rdc(path, header = None, sort = True, ncpus = 1):
         print("An RDC-like DataFrame is required")
 
     return rdc
+
+
+def load_blacklist(genome):
+    genomes = {'hg19': 'human', 'hg38': 'human',
+                        'mm9': 'mouse', 'mm10': 'mouse'}
+    ssl._create_default_https_context = ssl._create_unverified_context
+    if genome != 'hg19':
+        return pd.read_csv("https://mitra.stanford.edu/kundaje/akundaje/release/blacklists/{0}-{1}/{0}.blacklist.bed.gz".format(genome, genomes[genome]), sep = '\t', header = None,
+	usecols = [0,1,2], names = BED3)
+    else:
+        return pd.read_csv("http://mitra.stanford.edu/kundaje/akundaje/release/blacklists/hg19-human/wgEncodeHg19ConsensusSignalArtifactRegions.bed.gz", sep = '\t', header = None,
+	usecols = [0,1,2], names = BED3)
+    
