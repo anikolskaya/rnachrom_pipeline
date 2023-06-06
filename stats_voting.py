@@ -4,9 +4,6 @@ import pathlib
 import os
 from natsort import natsort_keygen
 
-import pathlib
-import os
-from natsort import natsort_keygen
 
 def calculate_stats(frames_d,
                     outdir_path = './stats'):
@@ -75,3 +72,4 @@ def counts_by_chr(d):
                                                                    'selected_annot': 'Nannot_correct_strand',
                                                                    'no_annot': 'Nnoannot',
                                                                    'voted_noribo': 'NnoRibo'}).sort_values(by="Chromosome", key=natsort_keygen())
+    
