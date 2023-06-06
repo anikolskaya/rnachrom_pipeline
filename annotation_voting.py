@@ -3,12 +3,15 @@ import pandas as pd
 import sys
 import argparse
 import os
+import warnings
 from pathlib import Path
 
 from io_ import *
 from stats_voting import *
 from io_.schemas import voted_BED, rdc_pyranges_BED
 from io_.fileops import load_BED_annot
+
+warnings.filterwarnings('ignore')
 pd.options.mode.chained_assignment = None
 
 parser = argparse.ArgumentParser(description='Annotate RNA-parts of contacts, perform a voting procedure and deplete contacts derived from ribosomal RNAs')
@@ -54,7 +57,6 @@ def run_annotation_and_voting(
     d = {}
     empty = []
     
-    print(annot_format)
     if annot_format == 'GTF':
         gene_ann = load_gtf_restricted(gene_annot_path)
     elif annot_format == 'BED':
