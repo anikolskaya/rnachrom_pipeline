@@ -63,12 +63,12 @@ def run_annotation_and_voting(
         gene_ann = load_BED_annot(gene_annot_path)
     else:
         raise Exception('Gene annotation format is not supported')
-        
+    print(gene_ann.head())    
     cnts = load_rdc(contacts_path, header = None,
                     ncpus=ncpus)
     cnts.drop(['rna_cigar', 'dna_cigar'], axis=1, inplace=True)
     cnts = pr.PyRanges(cnts)
-    
+    print(cnts.head())
     d['selected_annot'], d['complement_annot'], d['no_annot'] = annotate_rdc(cnts, gene_ann, cpus = ncpus)
     
     d = dict(map(lambda item: (item[0], item[1].drop(like="annot$").as_df()), d.items()))
@@ -93,7 +93,7 @@ def run_annotation_and_voting(
     for empty_df in empty:
         d.pop(empty_df, None)
 
-    calculate_stats(d)
+    calculate_stats(d, rdc_path = args.rdc)
     print('Stats are calculated..')
 
     return 
