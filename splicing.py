@@ -14,7 +14,7 @@ parser.add_argument('path_rdc_primary', type=str, help='Path to the primary rna-
 parser.add_argument('--outdir', type=str, nargs='?', default = './results', help='A folder in which to store the results')
 args = parser.parse_args()
 
-def run_cigar_processing(rdc_path, outdir = './results'):
+def run_cigar_processing(rdc_path, outdir):
     """
     Parsing CIGAR field and spliced contacts processing: remove complex splicing cases ('I', 'D', > 1 'N' in CIGAR field), retain longer part of spliced contact ('N' = 1)
     
@@ -100,7 +100,7 @@ def process_simple_splicing(df):
 def calculate_stats(df, outdir): 
 
     """
-    Save a file with splicing statistics
+    Save a file with splicing statististics
     
 
     Parameters
@@ -115,7 +115,7 @@ def calculate_stats(df, outdir):
     stats['match'] = df[(df.N_cnt == 0) & (df.ID_cnt == 0)].shape[0]
     stats['splice_correct'] = df[(df.N_cnt == 1) & (df.ID_cnt == 0)].shape[0]
     stats['removed'] = stats['raw'] - stats['match'] - stats['splice_correct']
-    pd.DataFrame([stats]).to_csv(os.path.join(args.outdir, Path(args.path_rdc_primary).stem + '.splicing.stat.tsv'), sep = '\t', 
+    pd.DataFrame([stats]).to_csv(os.path.join(outdir, Path(sys.argv[1]).stem + '.splicing.stat.tsv'), sep = '\t', 
                                                                                                   index=False)
     return 
 
