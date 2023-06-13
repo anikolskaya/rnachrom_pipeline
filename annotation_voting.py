@@ -9,7 +9,7 @@ from pathlib import Path
 from io_ import *
 from stats_voting import *
 from io_.schemas import voted_BED, rdc_pyranges_BED
-from io_.fileops import load_BED_annot
+from io_.fileops import load_BED
 
 warnings.filterwarnings('ignore')
 pd.options.mode.chained_assignment = None
@@ -59,11 +59,19 @@ def run_annotation_and_voting(
     
     if annot_format == 'GTF':
         gene_ann = load_gtf_restricted(gene_annot_path)
+
     elif annot_format == 'BED':
-        gene_ann = load_BED_annot(gene_annot_path)
+        gene_ann = load_BED(gene_annot_path)
+        gene_ann = gene_ann[gene_ann['Strand'].isin(["+", "-", "."])]
+        gene_ann = pr.PyRanges(gene_ann)
+
+
     else:
         raise Exception('Gene annotation format is not supported')
-    print(gene_ann.head())    
+
+    gene_ann.gene_length = gene_ann.lengths()
+    gene_ann = gene_ann[['gene_name', 'gene_type', 'gene_length']]
+   
     cnts = load_rdc(contacts_path, header = None,
                     ncpus=ncpus)
     cnts.drop(['rna_cigar', 'dna_cigar'], axis=1, inplace=True)
