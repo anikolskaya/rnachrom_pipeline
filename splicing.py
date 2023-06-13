@@ -100,7 +100,7 @@ def process_simple_splicing(df):
 def calculate_stats(df, outdir): 
 
     """
-    Save a file with splicing statististics
+    Save a file with splicing statistics
     
 
     Parameters
