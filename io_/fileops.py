@@ -22,13 +22,11 @@ def load_gtf_restricted(path):
         ann = pr.read_gtf(path)
     except TypeError:
         print("A GTF-like DataFrame is required")
-        
-    ann.gene_length = ann.lengths()
-    ann = ann[ann.Feature == 'gene'][['gene_name', 'gene_type', 'gene_length']]
     
     return ann
 
-def load_BED_annot(path):
+
+def load_BED(path):
     """
     Read intervals and metadata from a bed file.
 
@@ -39,7 +37,7 @@ def load_BED_annot(path):
 
     Returns
     -------
-    PyRanges
+    pd.DataFrame
 
     """
     try:
@@ -51,10 +49,7 @@ def load_BED_annot(path):
     except TypeError:
             print("A BED-like DataFrame is required")
 
-    ann = pr.PyRanges(ann)
-    ann.gene_length = ann.lengths()
-
-    return ann[['gene_name', 'gene_type', 'gene_length']]
+    return ann
     
 
 def load_rdc(path, header = None, sort = True, ncpus = 1):
@@ -99,4 +94,4 @@ def load_blacklist(genome):
     else:
         return pd.read_csv("http://mitra.stanford.edu/kundaje/akundaje/release/blacklists/hg19-human/wgEncodeHg19ConsensusSignalArtifactRegions.bed.gz", sep = '\t', header = None,
 	usecols = [0,1,2], names = BED3)
-    
+   
