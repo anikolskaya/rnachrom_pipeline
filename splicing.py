@@ -115,7 +115,7 @@ def calculate_stats(df, outdir):
     stats['match'] = df[(df.N_cnt == 0) & (df.ID_cnt == 0)].shape[0]
     stats['splice_correct'] = df[(df.N_cnt == 1) & (df.ID_cnt == 0)].shape[0]
     stats['removed'] = stats['raw'] - stats['match'] - stats['splice_correct']
-    pd.DataFrame([stats]).to_csv(os.path.join(outdir, Path(sys.argv[1]).stem + '.splicing.stat.tsv'), sep = '\t', 
+    pd.DataFrame([stats]).to_csv(os.path.join(args.outdir, Path(args.path_rdc_primary).stem + '.splicing.stat.tsv'), sep = '\t', 
                                                                                                   index=False)
     return 
 
