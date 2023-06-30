@@ -12,7 +12,7 @@ rdc_BED = [
     'rna_strand',
     'rna_cigar',
     'dna_chr',
-    'dna_start',
+    'dna_bgn',
     'dna_end',
     'dna_strand',
     'dna_cigar'
@@ -26,7 +26,7 @@ rdc_dtypes = {
     'rna_strand': 'category',
     'rna_cigar': 'category',
     'dna_chr': 'category',
-    'dna_start': 'int',
+    'dna_bgn': 'int',
     'dna_end': 'int',
     'dna_strand': 'category',
     'dna_cigar': 'category'
@@ -40,7 +40,7 @@ rdc_pyranges_BED = [
     'Strand',
     'rna_cigar',
     'dna_chr',
-    'dna_start',
+    'dna_bgn',
     'dna_end',
     'dna_strand',
     'dna_cigar']
@@ -64,17 +64,22 @@ voted_BED = [
     'id',
     'rna_strand',
     'dna_chr',
-    'dna_start',
+    'dna_bgn',
     'dna_end',
     'dna_strand',
     'gene_name',
     'gene_type' 
 ]
 
+BED_Stereogene = [
+   'Chromosome',
+    'Start',
+    'End',
+    'bg_sm'
+]
 
 BED3 = [
    'Chromosome',
     'Start',
     'End',
 ]
-
