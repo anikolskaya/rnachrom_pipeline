@@ -29,3 +29,25 @@ optional arguments:
   --annot_file_format [ANNOT_FILE_FORMAT]. 
                         Gene annotation file format: GTF or BED (default: GTP)  
   --outdir [OUTDIR]     A folder in which to store results  
+
+usage: normalize_N2.py [-h] [--filter_top_n [FILTER_TOP_N]] [--filter_tail_n [FILTER_TAIL_N]] [--outdir [OUTDIR]]
+                       [--stat_folder [STAT_FOLDER]]
+                       path_rdc path_Stereogene path_config path_chrsizes
+
+Calculate N2 background normalization
+
+positional arguments:
+  path_rdc              Path to the rna-dna contacts file
+  path_Stereogene       Path to the Stereogene smoother script
+  path_config           Path to the config template file
+  path_chrsizes         Path to the file with chromosome sizes
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --filter_top_n [FILTER_TOP_N]
+                        Drop the most contacting RNAs (rank, default: 50)
+  --filter_tail_n [FILTER_TAIL_N]
+                        Drop the least contacting RNAs (rank, default: 1000)
+  --outdir [OUTDIR]     A folder in which to store the results
+  --stat_folder [STAT_FOLDER]
+                        A folder in which to store stats
