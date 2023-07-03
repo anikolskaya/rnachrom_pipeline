@@ -51,3 +51,21 @@ optional arguments:
   --outdir [OUTDIR]     A folder in which to store the results
   --stat_folder [STAT_FOLDER]
                         A folder in which to store stats
+
+usage: scaling.py [-h] [--factor [FACTOR]] [--threads [THREADS]]
+                  [--outdir [OUTDIR]]
+                  path_rdc_norm path_chrsizes
+
+Calculates inner- and inter-chromosomal scaling based on mRNA contacts density
+decay
+
+positional arguments:
+  path_rdc_norm        Path to the rna-dna contacts file,
+                       background_normalized
+  path_chrsizes        Path to the file with chromosome sizes
+
+optional arguments:
+  -h, --help           show this help message and exit
+  --factor [FACTOR]    Scale factor
+  --threads [THREADS]
+  --outdir [OUTDIR]    A folder in which to save results
