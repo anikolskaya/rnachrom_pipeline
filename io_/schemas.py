@@ -71,6 +71,23 @@ voted_BED = [
     'gene_type' 
 ]
 
+normalized_BED = [
+    'rna_chr',
+    'rna_bgn',
+    'rna_end',
+    'id',
+    'rna_strand',
+    'dna_chr',
+    'dna_bgn',
+    'dna_end',
+    'dna_strand',
+    'gene_name',
+    'gene_type' ,
+    'bg_sm', 
+    'N2'
+]
+
+
 BED_Stereogene = [
    'Chromosome',
     'Start',
@@ -82,4 +99,9 @@ BED3 = [
    'Chromosome',
     'Start',
     'End',
+]
+
+chrsizes_format = [
+    'chr',
+    'len'
 ]
