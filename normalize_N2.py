@@ -59,7 +59,7 @@ def run_normalization(rdc_path, stereogene_path,
     rdc = load_rdc(rdc_path, header = 0, 
                             sort = False, names = voted_BED)
 
-    print('rdc is loaded')
+  
     
     rdc_back = select_bg_rnas(rdc, filter_top_n = top_n_drop, 
                               filter_tail_n = tail_n_drop)
@@ -81,7 +81,7 @@ def run_normalization(rdc_path, stereogene_path,
                   path_back = rdc_path,
                   outdir = outdir)
 
-    print(cmd)
+  
     
     run_smoother(cmd)
     
@@ -90,7 +90,7 @@ def run_normalization(rdc_path, stereogene_path,
     bg = backannot(path_to_bg = bg_sm_path, 
                    rdc = rdc)
 
-    print("last step")
+  
     
     calculate_N2_normalization(bg)
 
