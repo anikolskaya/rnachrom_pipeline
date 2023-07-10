@@ -72,11 +72,10 @@ def run_annotation_and_voting(
     gene_ann.gene_length = gene_ann.lengths()
     gene_ann = gene_ann[['gene_name', 'gene_type', 'gene_length']]
    
-    cnts = load_rdc(contacts_path, header = None,
-                    ncpus=ncpus)
+    cnts = load_rdc(contacts_path, header = None)
     cnts.drop(['rna_cigar', 'dna_cigar'], axis=1, inplace=True)
     cnts = pr.PyRanges(cnts)
-    print(cnts.head())
+    #print(cnts.head())
     d['selected_annot'], d['complement_annot'], d['no_annot'] = annotate_rdc(cnts, gene_ann, cpus = ncpus)
     
     d = dict(map(lambda item: (item[0], item[1].drop(like="annot$").as_df()), d.items()))
