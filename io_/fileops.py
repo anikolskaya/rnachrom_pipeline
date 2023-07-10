@@ -52,7 +52,7 @@ def load_BED(path, names = annot_pyranges_BED):
     return ann
     
 
-def load_rdc(path, header = None, sort = True, names = rdc_pyranges_BED, usecols = 'All'):
+def load_rdc(path, header = None, sort = True, names = rdc_pyranges_BED):
     """
     Read intervals and metadata from a RNA-DNA contacts file.
 
@@ -67,10 +67,7 @@ def load_rdc(path, header = None, sort = True, names = rdc_pyranges_BED, usecols
 
     """
     try:
-        if usecols == 'All':
-            rdc = pd.read_csv(path, header=header, index_col=None, sep='\t', names=names)
-        else:
-            rdc = pd.read_csv(path, header=header, index_col=None, sep='\t', names=names, usecols = usecols)
+        rdc = pd.read_csv(path, header=header, index_col=None, sep='\t', names=names)
 
     except ValueError:
         print("An RDC-like DataFrame is required")
