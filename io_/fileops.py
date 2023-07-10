@@ -26,7 +26,7 @@ def load_gtf_restricted(path):
     return ann
 
 
-def load_BED(path):
+def load_BED(path, names = annot_pyranges_BED):
     """
     Read intervals and metadata from a bed file.
 
@@ -45,14 +45,14 @@ def load_BED(path):
                                           header = 0, 
                                           index_col=None,
                                           sep='\t',
-                                          names = annot_pyranges_BED)
+                                          names = names)
     except TypeError:
             print("A BED-like DataFrame is required")
 
     return ann
     
 
-def load_rdc(path, header = None, sort = True, ncpus = 1):
+def load_rdc(path, header = None, sort = True, names = rdc_pyranges_BED, usecols = 'All'):
     """
     Read intervals and metadata from a RNA-DNA contacts file.
 
@@ -60,11 +60,6 @@ def load_rdc(path, header = None, sort = True, ncpus = 1):
     ----------
     path : str
         Path to a rdc file
-        
-    ncpus: int
-        How many cpus to use. 
-        Can at most use 1 per chromosome or chromosome/strand tuple. 
-        Will only lead to speedups on large datasets.
 
     Returns
     -------
@@ -72,12 +67,11 @@ def load_rdc(path, header = None, sort = True, ncpus = 1):
 
     """
     try:
-        rdc = pd.read_csv(path,
-                       header=header,
-                       index_col=None,
-                       sep='\t',
-                       names=rdc_pyranges_BED,
-                       dtype=rdc_dtypes)
+        if usecols == 'All':
+            rdc = pd.read_csv(path, header=header, index_col=None, sep='\t', names=names)
+        else:
+            rdc = pd.read_csv(path, header=header, index_col=None, sep='\t', names=names, usecols = usecols)
+
     except ValueError:
         print("An RDC-like DataFrame is required")
 
@@ -94,4 +88,4 @@ def load_blacklist(genome):
     else:
         return pd.read_csv("http://mitra.stanford.edu/kundaje/akundaje/release/blacklists/hg19-human/wgEncodeHg19ConsensusSignalArtifactRegions.bed.gz", sep = '\t', header = None,
 	usecols = [0,1,2], names = BED3)
-   
+    
