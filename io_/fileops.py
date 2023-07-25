@@ -79,10 +79,12 @@ def load_blacklist(genome):
     genomes = {'hg19': 'human', 'hg38': 'human',
                         'mm9': 'mouse', 'mm10': 'mouse'}
     ssl._create_default_https_context = ssl._create_unverified_context
-    if genome != 'hg19':
+    if genome in list(genomes) and genome != 'hg19':
         return pd.read_csv("https://mitra.stanford.edu/kundaje/akundaje/release/blacklists/{0}-{1}/{0}.blacklist.bed.gz".format(genome, genomes[genome]), sep = '\t', header = None,
 	usecols = [0,1,2], names = BED3)
-    else:
+    elif genome == 'hg19':
         return pd.read_csv("http://mitra.stanford.edu/kundaje/akundaje/release/blacklists/hg19-human/wgEncodeHg19ConsensusSignalArtifactRegions.bed.gz", sep = '\t', header = None,
 	usecols = [0,1,2], names = BED3)
-    
+    else:
+	return pd.read_csv(genome, sep = '\t', header = None,
+	usecols = [0,1,2], names = BED3)
