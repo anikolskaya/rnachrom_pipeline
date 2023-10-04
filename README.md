@@ -1,10 +1,17 @@
-# rnachrom_pipeline
-usage: splicing.py [-h] [--outdir [OUTDIR]] path_rdc_primary  
-Parse CIGAR field and process spliced contacts  
+# RnaChrom scripts
+## Command line interface
+
+
+```
+usage: splicing.py [-h] [--outdir [OUTDIR]] path_rdc_primary
+ 
+Parse CIGAR field and process spliced contacts.
+  
 positional arguments:  
-  path_rdc_primary   Path to the primary rna-dna contacts file. 
+  path_rdc_primary   Path to the primary RNA-DNA contacts file.
+```
   
-  
+```
 usage: blacklisting.py [-h] [--outdir [OUTDIR]] path_rdc genome
 
 Removes contacts in which DNA parts overlap with ENCODE blacklisted regions
@@ -17,6 +24,8 @@ positional arguments:
 optional arguments:
   -h, --help         show this help message and exit
   --outdir [OUTDIR]  A folder in which to store the results
+```
+
   
   
 usage: annotation_voting.py [-h] [--annot_file_format [ANNOT_FILE_FORMAT]] [--outdir [OUTDIR]] rdc gene_annot  
