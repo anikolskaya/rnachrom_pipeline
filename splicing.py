@@ -14,6 +14,7 @@ parser.add_argument('path_rdc_primary', type=str, help='Path to the primary rna-
 parser.add_argument('--outdir', type=str, nargs='?', default = './results', help='A folder in which to store the results')
 args = parser.parse_args()
 
+#test
 def run_cigar_processing(rdc_path, outdir):
     """
     Parsing CIGAR field and spliced contacts processing: remove complex splicing cases ('I', 'D', > 1 'N' in CIGAR field), retain longer part of spliced contact ('N' = 1)
@@ -30,6 +31,7 @@ def run_cigar_processing(rdc_path, outdir):
     
     """
     rdc = load_rdc(rdc_path, header = 0)
+    print('test')
     rdc = splicing_cases(rdc)
     
     if not (rdc['N_cnt'] == 0).all() & (rdc['ID_cnt'] == 0).all():
